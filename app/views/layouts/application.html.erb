@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignment1phase1</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<% if not session[:user_id].nil? then %>
+  <p>
+    User <%= display_email(session[:user_id]) %> is signed in. 
+    <%= link_to 'Sign out', session_sign_out_path %>
+  </p>
+<hr />
+<% end %>
+<%= yield %>
+<p>Developed by William Babicz, 2012.</p>
+</body>
+</html>

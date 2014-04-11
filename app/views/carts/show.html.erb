@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <b>Name:</b>
+  <%= @cart.name %>
+</p>
+<p id="alert"><%= alert %></p>
+
+<p>
+ <%= form_for(Item.new) do |f| %>
+   <div>
+   <span class="field">
+     <%= f.label :product_id %>
+     <%= f.select :product_id,
+                  Product.all.collect{|p| [p.name, p.id]}.sort %>
+   </span>
+   <span class="field">
+     <%= f.label :quantity_ordered %>
+     <%= f.number_field :quantity_ordered %>
+   </span>
+   <span class="actions">
+     <%= f.submit "Add item to cart" %>
+</span>
+   </div>
+  <% end %>
+</p>
+
+<p>
+  <% if @cart.items.count > 0 then %>
+    <b>Shopping cart items:</b>
+    <table>
+      <tr>
+        <th>Item name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Unit price</th>
+        <th>Extended price</th>
+      </tr>
+      <% @cart.items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.product.description %></td>
+          <td><%= item.quantity_ordered %></td>
+          <td><%= item.product.unit_price %></td>
+          <td><%= item.extended_price %></td>
+          <td><%= link_to 'Remove item', item, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+</td>
+    The shopping cart is empty.
+<% end %>
+</p>
+
+<p>
+  <% if @cart.items.count > 0 then %>
+    <%= link_to 'Checkout', checkout_cart_path(@cart),
+                method: :put %> |
+  <% end %>
+  <%= link_to 'List products', products_path %> |
+  <%= link_to 'Change cart name', edit_cart_path(@cart) %> |
+  <%= link_to 'Delete the cart', @cart,
+               confirm: 'Are you sure?', method: :delete %>
+</p>

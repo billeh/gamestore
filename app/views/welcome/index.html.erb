@@ -1,0 +1,16 @@
+<h1>Welcome to the store!</h1>
+<br>
+<% if administrator_signed_in? then %>
+  <ul>
+    <li><%= link_to 'Manage users', users_path %></li>
+    <li><%= link_to 'Manage products', products_path %></li>
+    <li><%= link_to 'Manage carts', carts_path %></li>
+    <li><%= link_to 'Manage cart items', items_path %></li>
+  </ul>
+<% end %>
+
+<% if session[:cart_id].nil? then %>
+  <p><%= link_to 'Start shopping', new_cart_path %></p>
+<% else %>
+  <p><%= link_to 'Continue shopping', cart_path(session[:cart_id]) %></p>
+<% end %>
